@@ -8,10 +8,11 @@ int main()
 		char value = 0;
 		FILE *ptr;
 		FILE *ptr_read;
+		printf("\n--------------------------------------------\n");
 		printf("Ingrese una opcion para el led\n1 -> Enciende\n2-> Apaga\n3 -> Random\n4 -> Cerrar\n");
 		scanf("%i", &option);
 		ptr = fopen("/sys/class/leds/gpio-led//brightness", "w");
-		ptr_read = fopen("/cat/dev/random", "rb");
+		ptr_read = fopen("/dev/random", "rb");
 		if(1 == option)
 		{
 			fprintf(ptr, "%i", 1);
@@ -24,7 +25,7 @@ int main()
 		}
 		else if(3 == option)
 		{
-			value = fread(&value, sizeof(char), 1, ptr_read);
+			fread(&value, sizeof(char), 1, ptr_read);
 			if(value > 128)
 			{
 				fprintf(ptr, "%i", 1);
@@ -43,6 +44,7 @@ int main()
 		{
 			printf("Opcion incorrecta\n");
 		}
+		printf("\n---------------------------------------------\n");
 		fclose(ptr);
 		fclose(ptr_read);
 	}
